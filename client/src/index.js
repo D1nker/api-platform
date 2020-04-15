@@ -14,15 +14,36 @@ import {
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import * as serviceWorker from './serviceWorker';
-// Import your reducers and routes here
+
+// Import your reducers
+import book from './reducers/book/';
+import review from './reducers/review/';
+import user from './reducers/user/';
+import todo from './reducers/todo/';
+
+// Import routes
+import bookRoutes from './routes/book';
+import reviewRoutes from './routes/review';
+import userRoutes from './routes/user';
+import todoRoutes from './routes/todo';
+
+// Import component
 import Welcome from './Welcome';
+import Book from './components/book';
+import Review from './components/review';
+import User from './components/user';
+import Todo from './components/todo';
+
 
 const history = createBrowserHistory();
 const store = createStore(
   combineReducers({
     router: connectRouter(history),
     form,
-    /* Add your reducers here */
+    book,
+    review,
+    user,
+    todo
   }),
   applyMiddleware(routerMiddleware(history), thunk)
 );
@@ -31,8 +52,11 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path="/" component={Welcome} strict={true} exact={true}/>
-        {/* Add your routes here */}
+        {bookRoutes}
+        {reviewRoutes}
+        {userRoutes}
+        {todoRoutes}
+        <Route path="/" component={Welcome} strict={true} exact={true} />
         <Route render={() => <h1>Not Found</h1>} />
       </Switch>
     </ConnectedRouter>
